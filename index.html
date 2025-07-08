@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YouTube Downloader</title>
+</head>
+<body>
+    <h1>YouTube Clip Downloader</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for category, message in messages %}
+          <li><strong>{{ category }}:</strong> {{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <form method="POST">
+        <label>YouTube Link:</label><br>
+        <input type="text" name="link" size="80"><br><br>
+        
+        <label>Start Time (-ss):</label><br>
+        <input type="text" name="ss" placeholder="e.g. 00:03:00"><br><br>
+        
+        <label>End Time (-to):</label><br>
+        <input type="text" name="to" placeholder="e.g. 00:04:00"><br><br>
+
+        <label>Output File Name:</label><br>
+        <input type="text" name="output" placeholder="e.g. ytyt.mkv"><br><br>
+
+        <button type="submit">Download</button>
+    </form>
+</body>
+</html>
