@@ -6,11 +6,15 @@
         body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
         .error { color: #d32f2f; }
         .success { color: #388e3c; }
+        .warning { color: #f57c00; }
         input[type="text"] { width: 100%; padding: 8px; margin: 5px 0 15px; }
         button { padding: 10px 20px; background: #4285f4; color: white; border: none; cursor: pointer; }
         button:hover { background: #3367d6; }
         .note { font-size: 0.9em; color: #666; margin-top: -10px; }
-        .warning { color: #f57c00; }
+        .progress-container { margin: 20px 0; }
+        .progress-bar { height: 20px; background: #e0e0e0; border-radius: 10px; overflow: hidden; }
+        .progress { height: 100%; background: #4caf50; width: 0%; transition: width 0.3s; }
+        .status-message { margin-top: 10px; }
     </style>
 </head>
 <body>
