@@ -1,33 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>YouTube Downloader</title>
+    <title>YouTube Clip Downloader</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .error { color: #d32f2f; }
+        .success { color: #388e3c; }
+        input[type="text"] { width: 100%; padding: 8px; margin: 5px 0 15px; }
+        button { padding: 10px 20px; background: #4285f4; color: white; border: none; cursor: pointer; }
+        button:hover { background: #3367d6; }
+        .note { font-size: 0.9em; color: #666; margin-top: -10px; }
+        .warning { color: #f57c00; }
+    </style>
 </head>
 <body>
     <h1>YouTube Clip Downloader</h1>
+    
     {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul>
-        {% for category, message in messages %}
-          <li><strong>{{ category }}:</strong> {{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
+        {% if messages %}
+            <div class="messages">
+            {% for category, message in messages %}
+                <p class="{{ category }}">{{ message }}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
     {% endwith %}
+    
     <form method="POST">
-        <label>YouTube Link:</label><br>
-        <input type="text" name="link" size="80"><br><br>
+        <label>YouTube URL:</label>
+        <input type="text" name="link" placeholder="https://www.youtube.com/watch?v=..." required>
         
-        <label>Start Time (-ss):</label><br>
-        <input type="text" name="ss" placeholder="e.g. 00:03:00"><br><br>
+        <label>Start Time:</label>
+        <input type="text" name="ss" placeholder="00:01:30" required>
+        <div class="note">Format: HH:MM:SS or MM:SS</div>
         
-        <label>End Time (-to):</label><br>
-        <input type="text" name="to" placeholder="e.g. 00:04:00"><br><br>
+        <label>End Time:</label>
+        <input type="text" name="to" placeholder="00:02:30" required>
+        <div class="note">Format: HH:MM:SS or MM:SS</div>
+        <p class="warning">Note: Maximum clip duration is 5 minutes.</p>
 
-        <label>Output File Name:</label><br>
-        <input type="text" name="output" placeholder="e.g. ytyt.mkv"><br><br>
+        <label>Output Filename:</label>
+        <input type="text" name="output" placeholder="my_clip.mp4" required>
+        <div class="note">Allowed formats: .mp4, .mkv, .webm</div>
 
-        <button type="submit">Download</button>
+        <button type="submit">Download Clip</button>
     </form>
 </body>
 </html>

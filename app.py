@@ -1,9 +1,22 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-import subprocess
+import yt_dlp
+import re
 import os
+import logging
 
 app = Flask(__name__)
-app.secret_key = "yt_secret"
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "supersecretkey")
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+
+# Validate time format (HH:MM:SS or MM:SS)
+def validate_time(time_str):
+    return re.match(r'^([0-9]{1,2}:)?[0-5][0-9]:[0-5][0-9]$', time_str)
+
+# Sanitize filename
+def sanitize_filename(filename):
+    return re.sub(r'[^\w\-_.]', '', filename)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -13,21 +26,73 @@ def index():
         to = request.form["to"]
         output = request.form["output"]
         
-        if not link or not ss or not to or not output:
-            flash("Please fill in all fields", "error")
+        # Validate inputs
+        errors = []
+        if not link.startswith(("https://www.youtube.com/", "https://youtu.be/")):
+            errors.append("Invalid YouTube URL")
+        if not validate_time(ss):
+            errors.append("Invalid start time format (use HH:MM:SS or MM:SS)")
+        if not validate_time(to):
+            errors.append("Invalid end time format (use HH:MM:SS or MM:SS)")
+        if not output or not output.endswith(('.mp4', '.mkv', '.webm')):
+            errors.append("Invalid output filename (use .mp4, .mkv or .webm)")
+        
+        # Calculate duration in seconds
+        if not errors:
+            try:
+                start_sec = sum(x * int(t) for x, t in zip([3600, 60, 1], ss.split(":")[::-1]))
+                end_sec = sum(x * int(t) for x, t in zip([3600, 60, 1], to.split(":")[::-1]))
+                duration = end_sec - start_sec
+                
+                if duration <= 0:
+                    errors.append("End time must be after start time")
+                elif duration > 300:  # 5 minutes
+                    errors.append("Clip duration cannot exceed 5 minutes (Render timeout limit)")
+            except Exception as e:
+                errors.append(f"Error processing times: {str(e)}")
+        
+        if errors:
+            for error in errors:
+                flash(error, "error")
             return redirect(url_for("index"))
-
-        cmd = f"python youtube.py -L \"{link}\" -ss {ss} -to {to} -O {output}"
+        
+        # Sanitize output filename
+        safe_output = sanitize_filename(output)
+        
         try:
-            subprocess.run(cmd, shell=True, check=True)
-            flash(f"Download completed: {output}", "success")
-        except subprocess.CalledProcessError as e:
-            flash("Error while downloading video.", "error")
+            app.logger.info(f"Starting download: {link} from {ss} to {to} as {safe_output}")
+            
+            # Configure yt-dlp options
+            ydl_opts = {
+                'format': 'best',
+                'outtmpl': safe_output,
+                'download_ranges': [{'start_time': ss, 'end_time': to}],
+                'force_keyframes_at_cuts': True,
+                'quiet': False,
+                'no_warnings': True,
+                'ignoreerrors': True,
+                'noprogress': False,
+                'socket_timeout': 30,
+                'http_headers': {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                }
+            }
+            
+            # Download the clip
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                ydl.download([link])
+            
+            flash(f"Download completed: {safe_output}", "success")
+            app.logger.info(f"Successfully downloaded: {safe_output}")
+            
+        except Exception as e:
+            flash(f"Error during download: {str(e)}", "error")
+            app.logger.error(f"Download error: {str(e)}")
 
         return redirect(url_for("index"))
 
     return render_template("index.html")
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 6000))
+    port = int(os.environ.get("PORT", 9999))
     app.run(debug=True, host='0.0.0.0', port=port)
