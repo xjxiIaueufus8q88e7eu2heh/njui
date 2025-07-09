@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Clip Downloader</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --dark: #1e1e2c;
+            --light: #f8f9fa;
+            --danger: #e63946;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e1e2c, #3a0ca3);
+            color: var(--light);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1947&auto=format&fit=crop') center/cover no-repeat;
+            opacity: 0.15;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-top: 20px;
+        }
+        
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #4cc9f0, #4361ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            color: #c2c2ff;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card-title {
+            color: var(--dark);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-title i {
+            color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4a5568;
+            font-weight: 500;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: white;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+            outline: none;
+        }
+        
+        .time-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .note {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .btn-block {
+            width: 100%;
+        }
+        
+        .progress-section {
+            display: none;
+            margin-top: 30px;
+        }
+        
+        .progress-container {
+            margin-bottom: 25px;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .progress-bar {
+            height: 16px;
+            background: #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--primary));
+            border-radius: 8px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .status-message {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            color: var(--dark);
+            font-size: 1.1rem;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .status-message i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .download-btn {
+            display: none;
+            animation: pulse 2s infinite;
+        }
+        
+        .download-btn i {
+            animation: bounce 1s infinite;
+        }
+        
+        .result-section {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        
+        .result-section h3 {
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #2ec4b6, #4cc9f0);
+            color: white;
+            box-shadow: 0 4px 15px rgba(46, 196, 182, 0.3);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #f72585);
+            color: white;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+        }
+        
+        .flashes {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 400px;
+        }
+        
+        .alert {
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            transform: translateX(100%);
+            animation: slideIn 0.3s forwards;
+        }
+        
+        .alert.error {
+            background: linear-gradient(135deg, var(--danger), #f72585);
+            color: white;
+        }
+        
+        .alert.success {
+            background: linear-gradient(135deg, #2ec4b6, #4cc9f0);
+            color: white;
+        }
+        
+        .alert i {
+            font-size: 1.2rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #a3a3cc;
+            font-size: 0.9rem;
+        }
+        
+        @keyframes slideIn {
+            to {
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(76, 201, 240, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(76, 201, 240, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(76, 201, 240, 0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .time-inputs {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-download"></i> YouTube Clip Downloader</h1>
+            <p>Download your favorite YouTube clips in seconds with our fast and easy-to-use tool</p>
+        </header>
+        
+        <main>
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-film"></i> Clip Information</h2>
+                
+                <form id="download-form">
+                    <div class="form-group">
+                        <label for="link">YouTube URL</label>
+                        <div class="input-with-icon">
+                            <i class="fab fa-youtube"></i>
+                            <input type="text" id="link" name="link" class="form-control" 
+                                   placeholder="https://www.youtube.com/watch?v=..." required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group time-inputs">
+                        <div>
+                            <label for="ss">Start Time</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-play-circle"></i>
+                                <input type="text" id="ss" name="ss" class="form-control" 
+                                       placeholder="00:01:30" required>
+                            </div>
+                            <div class="note">Format: HH:MM:SS or MM:SS</div>
+                        </div>
+                        
+                        <div>
+                            <label for="to">End Time</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-stop-circle"></i>
+                                <input type="text" id="to" name="to" class="form-control" 
+                                       placeholder="00:02:30" required>
+                            </div>
+                            <div class="note">Format: HH:MM:SS or MM:SS</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="output">Output Filename</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-file-video"></i>
+                            <input type="text" id="output" name="output" class="form-control" 
+                                   placeholder="my_awesome_clip.mp4" required>
+                        </div>
+                        <div class="note">Allowed formats: .mp4, .mkv, .webm</div>
+                        <div class="note warning"><i class="fas fa-exclamation-circle"></i> Maximum clip duration is 5 minutes</div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-download"></i> Download Clip
+                    </button>
+                </form>
+                
+                <div class="progress-section" id="progress-section">
+                    <h2 class="card-title"><i class="fas fa-sync-alt fa-spin"></i> Download Progress</h2>
+                    
+                    <div class="progress-container">
+                        <div class="progress-header">
+                            <span>Processing...</span>
+                            <span id="progress-percent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="status-message">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="status-message">Preparing your download...</span>
+                    </div>
+                    
+                    <button id="download-btn" class="btn btn-success btn-block download-btn">
+                        <i class="fas fa-file-download"></i> Download Your Clip
+                    </button>
+                    
+                    <button id="new-download-btn" class="btn btn-primary btn-block" style="display: none;">
+                        <i class="fas fa-plus-circle"></i> Download Another Clip
+                    </button>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>© 2023 YouTube Clip Downloader | Made with <i class="fas fa-heart" style="color: var(--danger);"></i> for content creators</p>
+        </footer>
+    </div>
+    
+    <div class="flashes" id="flash-messages"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('download-form');
+        const progressSection = document.getElementById('progress-section');
+        const progressFill = document.getElementById('progress-fill');
+        const progressPercent = document.getElementById('progress-percent');
+        const statusMessage = document.getElementById('status-message');
+        const downloadBtn = document.getElementById('download-btn');
+        const newDownloadBtn = document.getElementById('new-download-btn');
+        const flashContainer = document.getElementById('flash-messages');
+        
+        // Handle form submission
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(form);
+            const data = {
+                link: formData.get('link'),
+                ss: formData.get('ss'),
+                to: formData.get('to'),
+                output: formData.get('output')
+            };
+            
+            // Show progress section
+            progressSection.style.display = 'block';
+            form.style.display = 'none';
+            
+            // Scroll to progress
+            progressSection.scrollIntoView({ behavior: 'smooth' });
+            
+            try {
+                // Start download process
+                const response = await fetch('/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                // Handle error responses
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.errors.join(', '));
+                }
+                
+                // Process successful response
+                const result = await response.json();
+                trackProgress(result.request_id, result.filename);
+            } catch (error) {
+                showFlash('error', error.message);
+                statusMessage.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${error.message}`;
+                newDownloadBtn.style.display = 'block';
+            }
+        });
+        
+        // Track download progress
+        function trackProgress(requestId, filename) {
+            let progressInterval = setInterval(async () => {
+                try {
+                    const response = await fetch(`/progress/${requestId}`);
+                    const data = await response.json();
+                    
+                    // Update progress
+                    const progress = data.progress || 0;
+                    progressFill.style.width = `${progress}%`;
+                    progressPercent.textContent = `${Math.round(progress)}%`;
+                    statusMessage.innerHTML = `<i class="fas fa-info-circle"></i> ${data.message}`;
+                    
+                    // Handle different states
+                    if (data.status === 'completed') {
+                        clearInterval(progressInterval);
+                        statusMessage.innerHTML = `<i class="fas fa-check-circle"></i> Download completed!`;
+                        
+                        // Show download button
+                        downloadBtn.style.display = 'block';
+                        newDownloadBtn.style.display = 'block';
+                        
+                        // Setup download button
+                        downloadBtn.onclick = () => {
+                            window.location.href = `/download/${filename}`;
+                            
+                            // Cleanup after 1 hour
+                            setTimeout(() => {
+                                fetch(`/cleanup/${filename}`);
+                            }, 3600000);
+                        };
+                        
+                        // Setup new download button
+                        newDownloadBtn.onclick = () => {
+                            progressSection.style.display = 'none';
+                            form.style.display = 'block';
+                            progressFill.style.width = '0%';
+                            progressPercent.textContent = '0%';
+                            downloadBtn.style.display = 'none';
+                            newDownloadBtn.style.display = 'none';
+                            
+                            // Reset form
+                            form.reset();
+                        };
+                    } 
+                    else if (data.status === 'error') {
+                        clearInterval(progressInterval);
+                        statusMessage.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error: ${data.message}`;
+                        newDownloadBtn.style.display = 'block';
+                    }
+                } catch (error) {
+                    clearInterval(progressInterval);
+                    statusMessage.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error tracking progress: ${error.message}`;
+                    newDownloadBtn.style.display = 'block';
+                }
+            }, 1000);
+        }
+        
+        // Show flash messages
+        function showFlash(type, message) {
+            const flash = document.createElement('div');
+            flash.className = `alert ${type}`;
+            flash.innerHTML = `
+                <i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i>
+                ${message}
+            `;
+            
+            flashContainer.appendChild(flash);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                flash.style.opacity = '0';
+                setTimeout(() => {
+                    flash.remove();
+                }, 300);
+            }, 5000);
+        }
+        
+        // Handle any existing flashes from server
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    showFlash('{{ category }}', '{{ message }}');
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    });
+    </script>
+</body>
+</html>

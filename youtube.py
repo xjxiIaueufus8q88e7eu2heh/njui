@@ -101,9 +101,9 @@ def yt(link, output, ss, to):
             json=json_data,
     )
    
-#    video, audio = streams(json.loads(response.text)["streamingData"]["adaptiveFormats"])
-    print("VIDEO   : ", response.text)
-#    os.system(f"ffmpeg -ss {ss} -to {to} -i \"{video['url']}\" -ss {ss} -to {to} -i \"{audio['url']}\" -c copy -preset ultrafast {output}")
+    video, audio = streams(json.loads(response.text)["streamingData"]["adaptiveFormats"])
+#    print("VIDEO   : ", response.text)
+    os.system(f"ffmpeg -ss {ss} -to {to} -i \"{video['url']}\" -ss {ss} -to {to} -i \"{audio['url']}\" -c copy -preset ultrafast {output}")
 if __name__ == '__main__':
     try:
         yt()
