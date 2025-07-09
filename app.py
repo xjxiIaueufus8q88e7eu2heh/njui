@@ -137,7 +137,7 @@ def index():
         # Start download in background thread
         thread = threading.Thread(
             target=download_thread,
-            args=(link, ss, to, safe_output, request_id)
+            args=(link, ss, to, safe_output, request_id))
         thread.start()
         
         # Redirect to status page
