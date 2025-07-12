@@ -41,35 +41,44 @@ download_status = {}
 download_lock = threading.Lock()
 
 # YouTube cookies and headers
-YT_COOKIES = cookies = {
-    "__Secure-3PSID": "g.a000yAjvXKH56cEEfOdN8kQpE0wZ2ULSITkgpWv8CsPbwYcjM53Q00EdfLUo6tcTExqAmPoxLAACgYKAQ4SARMSFQHGX2MiiUQVGiZCzU_eTJQm1GD9iBoVAUF8yKrbBrK4slE8z9SHCr_Qfvj_0076",
-    "SIDCC": "AKEyXzWIqBpZl8rlvo1RdV6adIyNcfDtiMeeqsi4YozGVwKCLUHjZEdRafTEBmCoB3f2-V02tA9g",
-    "SID": "g.a000yAjvXKH56cEEfOdN8kQpE0wZ2ULSITkgpWv8CsPbwYcjM53QG-pHduqj4H9e0mLycbJm-wACgYKAZkSARMSFQHGX2Mitj_HNFT65dL-POGr8fxnUBoVAUF8yKrRlvrhuQtztaXZT4Qty5Ec0076",
-    "__Secure-1PSIDTS": "sidts-CjEB5H03P3aOnF4aDyfSMeOxRRGXQcjXfP_xFSYwzKdaWkJR3wg7vMTPu_v-ObfA2dSPEAA",
-    "SAPISID": "9T54xbVWOf_zIW-v/AXsazo3XdLyUhcCs1",
-    "__Secure-1PSIDCC": "AKEyXzUXX5TIMupnq2ows5Qq3pcDk7FEIwtiaQhZym34i_ROwwJZ68l8-uo8Jjdxuo-KKa6AD9c",
-    "SSID": "Aw6sllZ63la0Q_Nq3",
-    "__Secure-1PAPISID": "9T54xbVWOf_zIW-v/AXsazo3XdLyUhcCs1",
-    "__Secure-1PSID": "g.a000yAjvXKH56cEEfOdN8kQpE0wZ2ULSITkgpWv8CsPbwYcjM53QC8tC62UscAo0aMGZuEOjzgACgYKAW0SARMSFQHGX2MiczsPAXISbyuvO26w7xxRtxoVAUF8yKqS1nJIZ0oX5Dh1mTAF0S_m0076",
-    "__Secure-3PAPISID": "9T54xbVWOf_zIW-v/AXsazo3XdLyUhcCs1",
-    "__Secure-3PSIDCC": "AKEyXzU4Xh4s0TlhNxMvA6zvcAbwNNhAOchPR2C3B-NaXPrv4_9waDP_wUfMfRJqmBNZNHafIasv",
-    "__Secure-3PSIDTS": "sidts-CjEB5H03P3aOnF4aDyfSMeOxRRGXQcjXfP_xFSYwzKdaWkJR3wg7vMTPu_v-ObfA2dSPEAA",
-    "APISID": "o6mZWZfO8DN-iuTH/AE8hwYgkeRNylE5H0",
-    "HSID": "AndK1lFdxIin_WUV4",
-    "LOGIN_INFO": "AFmmF2swRQIgF7auZVQ3czCEzHP1dYNpFkN1oUyBnsULnjY1PTR2wT0CIQDLQBeIyrMv2ge3d7kqvHcDOGomKg2DEzyU1RySMIlUxw:QUQ3MjNmdy1kLUV3b05RS0kyMGszbURyTUEyVzg3YVN6S3A0b1FpQjNpazRNdkp6eTRNejZuWWxIMTVZdWxSTktTUW1yc0JkbXRlSTV1UHhDaElHcVdiMEp6Y19pSnV2Y2ltbGFEVExZYkRVVmtHTzZELVN4NGR2Y014ZVAtdFBWQ2h4dFB2SlJnWkJpRmVBQWlGMEtod3dfRGNFaTZ0dUhR",
-    "PREF": "f4=4000000&f6=40000000&tz=Asia.Calcutta&f7=100"
+YT_COOKIES = {
+    'ST-1jl44ru': 'csn=GSlEKOZq6K08Ueal&itct=CM0CEPxaIhMIhZqfsc63jgMVvvlMAh2IqxmJMgpnLWhpZ2gtcmVjWg9GRXdoYXRfdG9fd2F0Y2iaAQYQjh4YngE%3D',
+    'SIDCC': 'AKEyXzXyj_SzsukeBKYKt6KRQrRPNlBA9caUki-7UOr0fgMHmDGS6Ts0gEngxbIpBpmgU2eP',
+    '__Secure-1PSIDCC': 'AKEyXzVHK8GpGvy3h80vk8zdui0DNgONDcS3CgvTomQx3sHd0b2gvzD2PcJEmImh7Cwi91Gn2Q',
+    '__Secure-3PSIDCC': 'AKEyXzXIPLwYsOShHjMFug5j1Ge4VTO0V5iO55-X7ZSaLmBw4ATPK2Rc4YECQeqtJi5rW5Z27Q',
+    'LOGIN_INFO': 'AFmmF2swRQIhAKYGKe7Sz7aX6eOLqJIuQQhsWLxzGsWHukXH34cavXXAAiBUF2yEanpm3sAvSLWV8FmaQ2CTo6ooZM5rtzsU56RqbQ:QUQ3MjNmenlxclAwVHgyWUtONVloRnp5ZzRFWXZpZjlRTF9teEdsVVpVc1k0ZDgyMFM3elQ2cmdUUFB4bUJBSXJkbXRuT0o5WFpuUFF3aE9sRkhrUTJBQ0dDYVFCbThQczJsSlhPLWMwZDBfSmpmRllEN3VJcjJMd3RWcHRrTWh1d2FiV3JrVDc1Q18xQVlFRGdTSkhFOU1ZN2N0UWdwRmpB',
+    'PREF': 'f6=40000000&tz=Asia.Calcutta',
+    'VISITOR_INFO1_LIVE': 'TcvRURFXwZY',
+    'VISITOR_PRIVACY_METADATA': 'CgJJThIEGgAgGA%3D%3D',
+    'APISID': '85qI8fAsn7Q7PDxs/As53UNrIdO7bFBb7_',
+    'HSID': 'A97_ROvAFpYFtsVdh',
+    'SAPISID': 'ODeTM781gRL7UdID/A0F_qMb_UUlhxnLLG',
+    'SID': 'g.a000ygi68HtoGmv9lLjtAslbXj7bKXhKGVjiJJHuvHg4zbyuRZHUQ_gZiiKCTN4K6YodkIGcHAACgYKAWgSARASFQHGX2MioKs3RgKaqWrj6cXihhkcmhoVAUF8yKobO02jpijtoTnobwnbaAql0076',
+    'SSID': 'AZOBIRYi4YggP0ums',
+    '__Secure-1PAPISID': 'ODeTM781gRL7UdID/A0F_qMb_UUlhxnLLG',
+    '__Secure-1PSID': 'g.a000ygi68HtoGmv9lLjtAslbXj7bKXhKGVjiJJHuvHg4zbyuRZHUSmMl70EYHUbMQ1TH3_pqnQACgYKASUSARASFQHGX2MiEBRH99728DA_T8vMzP8AQBoVAUF8yKpMSd_bPkE54UQnkGcDJmFd0076',
+    '__Secure-1PSIDTS': 'sidts-CjIB5H03P4WGCa1oFBq6mL_67uwjsWfDwqJ-c7wY5SvKKdGMKUdxTmrg8o-Y7rRJNHUYJBAA',
+    '__Secure-3PAPISID': 'ODeTM781gRL7UdID/A0F_qMb_UUlhxnLLG',
+    '__Secure-3PSID': 'g.a000ygi68HtoGmv9lLjtAslbXj7bKXhKGVjiJJHuvHg4zbyuRZHU3qBVxpjNt2GYA4snYiifhwACgYKAQYSARASFQHGX2Mig48oKFGXpAoyKPkgocbPfBoVAUF8yKoXblmrpX5-ZQvvR3xMJO_e0076',
+    '__Secure-3PSIDTS': 'sidts-CjIB5H03P4WGCa1oFBq6mL_67uwjsWfDwqJ-c7wY5SvKKdGMKUdxTmrg8o-Y7rRJNHUYJBAA',
+    '__Secure-ROLLOUT_TOKEN': 'CPf809iXw5bMzQEQh_7Fms63jgMYsYjdqc63jgM%3D',
+    'GPS': '1',
+    'YSC': '8iWzeSTOyHg',
 }
 
 YT_HEADERS = {
-    'Connection': 'keep-alive',
-    'User-Agent': 'com.google.ios.youtube/20.10.4 (iPhone16,2; U; CPU iOS 18_3_2 like Mac OS X;)',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    'Accept-Language': 'en-us,en;q=0.5',
-    'Sec-Fetch-Mode': 'navigate',
-    'X-Youtube-Client-Name': '5',
+    'Authorization': 'Bearer ya29.a0AS3H6Nxg2ms84m2nfEdXSb164BD1NGHtggJM0Ftbn9Iu0HVwq36S_jkJQTZ1JjGshaKKd5FSund-ppBW8SfqXotYEM8-P7PjKLwsCToLkHWQs2b6Tc_x9i0D5BQCy31VywmkeMXTWsMrcNMOy7KWIAEfNibcHXfmrK_JU6t_MiuR26LUlJ3OyAbVoKLen7n84NeM-F6GdhDh0SDu4ZfDiq4raS69a_JtvjdVP7BK_qjs0nNXlFZucYl3A9TvZfnDDP-L5y2U2bLj7CANULbbrcrrhdvS-dAWrngXkdMiZZB2wNpfqgVYekL3dX5hKRqB1jHIi4mCOhO6i1IYaCgYKAZ0SARQSFQHGX2Mi9oX3sjEysS_a-vCl8fYsaQ0343',
     'X-Youtube-Client-Version': '20.10.4',
-    'Origin': 'https://www.youtube.com',
-    'X-Goog-Visitor-Id': 'CgtneWx0QzE2MmpKWSjpibnCBjIKCgJJThIEGgAgZw%3D%3D'
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'X-Youtube-Client-Name': '5',
+    'Accept-Language': 'en-us,en;q=0.5',
+    'Cache-Control': 'no-cache',
+    'User-Agent': 'com.google.ios.youtube/20.10.4 (iPhone16,2; U; CPU iOS 18_3_2 like Mac OS X;)',
+    'X-Youtube-Hot-Hash-Data': 'CJqLysMGEhQxMDQ1ODI0NjM5MTA2MDM2MTU3MBiai8rDBiiU5PwSKLn1_BIogYL9Eiil0P0SKJ6R_hIopqL-Eiittf4SKMjK_hIooN3-Eii36v4SKMCD_xIor4__EijA3f8SKLD1_xIox4CAEyiLgoATKN2CgBMo95CAEyiHkYATKMuRgBMogpKAEyjBloATKNmWgBMoipeAEyi4l4ATKPeagBMo8JuAEyiknIATMjJBT2pGb3gyd2tycm5fZloyNm96VnpsQ2tWaUVxMi1ranJlUk5fZWJpUEpBdWEzdGR6UToyQU9qRm94MGZwYzhjWE1uZENUd3VPLXFWYVk1bXZUbUtweDZ2NkZ3azVKVmJrcW1Fa0FCYENBTVNSQTBkb3RmNkZZZFZ5bW5kQW9BT2hqVHBCcHdMOGdxNUJKRUVyeVlWSWQzUHdneWFtZ25odllzQUxKZlB5QUtTRnFQOURNOTQzTGdHNDRNRnVrWFdWNlZLa3FZQg%3D%3D',
+    'X-Goog-Visitor-Id': 'CgtiMmo5ZURDNDhndyirgsrDBjIKCgJJThIEGgAgVToMCAEgt8HA1bSloLloWP_ipY6Qt8DuBg%3D%3D',
+    'X-GOOG-API-FORMAT-VERSION': '2',
+    'Connection': 'keep-alive',
+    'X-Youtube-Cold-Hash-Data': 'CJqLysMGEhQxNzUyNTgwMjU1Nzc2MTQzNTM4Nxiai8rDBjIyQU9qRm94MndrcnJuX2ZaMjZvelZ6bENrVmlFcTIta2pyZVJOX2ViaVBKQXVhM3RkelE6MkFPakZveDBmcGM4Y1hNbmRDVHd1Ty1xVmFZNW12VG1LcHg2djZGd2s1SlZia3FtRWtBQpwCQ0FNUzBBRU5XNG5RcVFMR0VxOFIyWGoyQXU4Ry1CVHJBXzRyb3czeUVLb0JwQmZyQU5jcnFBNUczUXY5QTkyeW14RGtCbzBQM0Eta0N1RVB6QXZJQzdBTnZ3Q0VEOXNFdUFLckRfd0VGSjhCeFFHWUR1SUVUZDBTaFFaS2h3SVJsd1ptRlhlMnJOWU1oWVVGNWJrRnZLX1NDNXctdXhmTTZ3YWtMSWJIQlpTekJ1bHAwLU1HeGpIOGxRYUE2QVRkVnBvQjAxNmRFZjRWN0JPVVIteGVtWUVHOTFHdEpNeDlxVzZlSVpCN3Uyc0FxQ1NwTWM5UDRRMnVFYmdMc1M3NVJ2VmJMZTBnNVFHUTN3YlhBNmcyN0FicEM1WUw%3D',
 }
 
 YT_PARAMS = {'prettyPrint': 'false'}
