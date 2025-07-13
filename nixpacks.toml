@@ -1,2 +1,21 @@
+providers = ["...", "python"]
 [phases.setup]
     nixPkgs = ['...', 'ffmpeg']
+[phases.setup]
+nixPkgs = [
+    "ffmpeg",
+    "python311"
+]
+
+[phases.install]
+commands = [
+    "pip install -r requirements.txt"
+]
+
+[phases.build]
+commands = [
+    "mkdir -p downloads"  # Create download directory
+]
+
+[start]
+cmd = "python app.py"
