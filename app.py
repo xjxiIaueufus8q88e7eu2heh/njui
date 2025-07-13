@@ -42,43 +42,30 @@ download_lock = threading.Lock()
 
 # YouTube cookies and headers
 YT_COOKIES = {
-    'ST-1jl44ru': 'csn=GSlEKOZq6K08Ueal&itct=CM0CEPxaIhMIhZqfsc63jgMVvvlMAh2IqxmJMgpnLWhpZ2gtcmVjWg9GRXdoYXRfdG9fd2F0Y2iaAQYQjh4YngE%3D',
-    'SIDCC': 'AKEyXzXyj_SzsukeBKYKt6KRQrRPNlBA9caUki-7UOr0fgMHmDGS6Ts0gEngxbIpBpmgU2eP',
-    '__Secure-1PSIDCC': 'AKEyXzVHK8GpGvy3h80vk8zdui0DNgONDcS3CgvTomQx3sHd0b2gvzD2PcJEmImh7Cwi91Gn2Q',
-    '__Secure-3PSIDCC': 'AKEyXzXIPLwYsOShHjMFug5j1Ge4VTO0V5iO55-X7ZSaLmBw4ATPK2Rc4YECQeqtJi5rW5Z27Q',
-    'LOGIN_INFO': 'AFmmF2swRQIhAKYGKe7Sz7aX6eOLqJIuQQhsWLxzGsWHukXH34cavXXAAiBUF2yEanpm3sAvSLWV8FmaQ2CTo6ooZM5rtzsU56RqbQ:QUQ3MjNmenlxclAwVHgyWUtONVloRnp5ZzRFWXZpZjlRTF9teEdsVVpVc1k0ZDgyMFM3elQ2cmdUUFB4bUJBSXJkbXRuT0o5WFpuUFF3aE9sRkhrUTJBQ0dDYVFCbThQczJsSlhPLWMwZDBfSmpmRllEN3VJcjJMd3RWcHRrTWh1d2FiV3JrVDc1Q18xQVlFRGdTSkhFOU1ZN2N0UWdwRmpB',
-    'PREF': 'f6=40000000&tz=Asia.Calcutta',
-    'VISITOR_INFO1_LIVE': 'TcvRURFXwZY',
-    'VISITOR_PRIVACY_METADATA': 'CgJJThIEGgAgGA%3D%3D',
-    'APISID': '85qI8fAsn7Q7PDxs/As53UNrIdO7bFBb7_',
-    'HSID': 'A97_ROvAFpYFtsVdh',
-    'SAPISID': 'ODeTM781gRL7UdID/A0F_qMb_UUlhxnLLG',
-    'SID': 'g.a000ygi68HtoGmv9lLjtAslbXj7bKXhKGVjiJJHuvHg4zbyuRZHUQ_gZiiKCTN4K6YodkIGcHAACgYKAWgSARASFQHGX2MioKs3RgKaqWrj6cXihhkcmhoVAUF8yKobO02jpijtoTnobwnbaAql0076',
-    'SSID': 'AZOBIRYi4YggP0ums',
-    '__Secure-1PAPISID': 'ODeTM781gRL7UdID/A0F_qMb_UUlhxnLLG',
-    '__Secure-1PSID': 'g.a000ygi68HtoGmv9lLjtAslbXj7bKXhKGVjiJJHuvHg4zbyuRZHUSmMl70EYHUbMQ1TH3_pqnQACgYKASUSARASFQHGX2MiEBRH99728DA_T8vMzP8AQBoVAUF8yKpMSd_bPkE54UQnkGcDJmFd0076',
-    '__Secure-1PSIDTS': 'sidts-CjIB5H03P4WGCa1oFBq6mL_67uwjsWfDwqJ-c7wY5SvKKdGMKUdxTmrg8o-Y7rRJNHUYJBAA',
-    '__Secure-3PAPISID': 'ODeTM781gRL7UdID/A0F_qMb_UUlhxnLLG',
-    '__Secure-3PSID': 'g.a000ygi68HtoGmv9lLjtAslbXj7bKXhKGVjiJJHuvHg4zbyuRZHU3qBVxpjNt2GYA4snYiifhwACgYKAQYSARASFQHGX2Mig48oKFGXpAoyKPkgocbPfBoVAUF8yKoXblmrpX5-ZQvvR3xMJO_e0076',
-    '__Secure-3PSIDTS': 'sidts-CjIB5H03P4WGCa1oFBq6mL_67uwjsWfDwqJ-c7wY5SvKKdGMKUdxTmrg8o-Y7rRJNHUYJBAA',
-    '__Secure-ROLLOUT_TOKEN': 'CPf809iXw5bMzQEQh_7Fms63jgMYsYjdqc63jgM%3D',
-    'GPS': '1',
-    'YSC': '8iWzeSTOyHg',
+    "__Secure-3PSID": "g.a000xAi68EEwiHpVgKOgb_0IkaVhqnDZ5lzCwhQRp8c82UzZZch8f2AzQqaJKg-B05iZm6D-ygACgYKARESARASFQHGX2Mit6lAJidyakf-DSQQ3RLMZRoVAUF8yKr7g1ZnIDE3zqNE1r1J8ZOo0076",
+    "__Secure-1PSIDTS": "sidts-CjIB5H03P-AdzJTCxSMrqV3MrvhaLXDlh54-abS10xB-lGChJP5JVUEZ-kj7dhf4uOxWLhAA",
+    "SAPISID": "vV-FkowIK7ScWwJW/Azy3I1xFL4tE9pMHs",
+    "__Secure-1PSIDCC": "AKEyXzVyk5AFJUmI0NuS3ekkFwQcPZIbC09vPY3UXHvWEGPQ_HJy3_2os9M_bTxAI20uIleCTB15",
+    "SSID": "A5QQ8kH3RspqENXL5",
+    "__Secure-1PAPISID": "vV-FkowIK7ScWwJW/Azy3I1xFL4tE9pMHs",
+    "__Secure-1PSID": "g.a000xAi68EEwiHpVgKOgb_0IkaVhqnDZ5lzCwhQRp8c82UzZZch8TqRoD9Yv9BQP11E6lRuz6gACgYKASMSARASFQHGX2MibIOMeMIAHC47JIC3nWJAZRoVAUF8yKqHSBH9KXhliZmpeGlJWSR60076",
+    "__Secure-3PAPISID": "vV-FkowIK7ScWwJW/Azy3I1xFL4tE9pMHs",
+    "__Secure-3PSIDCC": "AKEyXzVSUZYWOFjQBwQTEpoRjaOdLyLsw6gZB0e4oDh_XsoQBI-8ZLZaBjqkb1Yc-kChYMVrIA",
+    "__Secure-3PSIDTS": "sidts-CjIB5H03P-AdzJTCxSMrqV3MrvhaLXDlh54-abS10xB-lGChJP5JVUEZ-kj7dhf4uOxWLhAA",
+    "LOGIN_INFO": "AFmmF2swRAIgSL9JJ01yt_mRAxDNK51IBdT_pHp1CXE-Jc4EZ4m6CuACIBSzAE0jJLqohH230mwp6EBAW802qnUUI2odCV0JT3yh:QUQ3MjNmeVJKVEFoVVdlbXVpRHFNTnJ1aW5DNDNqWUxwNXFSQXdRbEpRaURydVNYMW43MGxoWkdVZmozb3M2UnR6SUR3S0QtamJSZGFJQzJBOW5IMmNSb0htc3ZRdkZDdmdpZmJObTVjcFh0R2tqb1ZLUnEtRjRUcFdrUzAwSDc3Vjg3WERudnJlakViUTZ1Z29BeHIyWUtIOENBTFZJbXNR",
+    "PREF": "f6=40000400&f7=4100&tz=Asia.Calcutta&f5=20000&f4=4000000"
 }
 
 YT_HEADERS = {
-    'Authorization': 'Bearer ya29.a0AS3H6Nxg2ms84m2nfEdXSb164BD1NGHtggJM0Ftbn9Iu0HVwq36S_jkJQTZ1JjGshaKKd5FSund-ppBW8SfqXotYEM8-P7PjKLwsCToLkHWQs2b6Tc_x9i0D5BQCy31VywmkeMXTWsMrcNMOy7KWIAEfNibcHXfmrK_JU6t_MiuR26LUlJ3OyAbVoKLen7n84NeM-F6GdhDh0SDu4ZfDiq4raS69a_JtvjdVP7BK_qjs0nNXlFZucYl3A9TvZfnDDP-L5y2U2bLj7CANULbbrcrrhdvS-dAWrngXkdMiZZB2wNpfqgVYekL3dX5hKRqB1jHIi4mCOhO6i1IYaCgYKAZ0SARQSFQHGX2Mi9oX3sjEysS_a-vCl8fYsaQ0343',
-    'X-Youtube-Client-Version': '20.10.4',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    'X-Youtube-Client-Name': '5',
-    'Accept-Language': 'en-us,en;q=0.5',
-    'Cache-Control': 'no-cache',
-    'User-Agent': 'com.google.ios.youtube/20.10.4 (iPhone16,2; U; CPU iOS 18_3_2 like Mac OS X;)',
-    'X-Youtube-Hot-Hash-Data': 'CJqLysMGEhQxMDQ1ODI0NjM5MTA2MDM2MTU3MBiai8rDBiiU5PwSKLn1_BIogYL9Eiil0P0SKJ6R_hIopqL-Eiittf4SKMjK_hIooN3-Eii36v4SKMCD_xIor4__EijA3f8SKLD1_xIox4CAEyiLgoATKN2CgBMo95CAEyiHkYATKMuRgBMogpKAEyjBloATKNmWgBMoipeAEyi4l4ATKPeagBMo8JuAEyiknIATMjJBT2pGb3gyd2tycm5fZloyNm96VnpsQ2tWaUVxMi1ranJlUk5fZWJpUEpBdWEzdGR6UToyQU9qRm94MGZwYzhjWE1uZENUd3VPLXFWYVk1bXZUbUtweDZ2NkZ3azVKVmJrcW1Fa0FCYENBTVNSQTBkb3RmNkZZZFZ5bW5kQW9BT2hqVHBCcHdMOGdxNUJKRUVyeVlWSWQzUHdneWFtZ25odllzQUxKZlB5QUtTRnFQOURNOTQzTGdHNDRNRnVrWFdWNlZLa3FZQg%3D%3D',
-    'X-Goog-Visitor-Id': 'CgtiMmo5ZURDNDhndyirgsrDBjIKCgJJThIEGgAgVToMCAEgt8HA1bSloLloWP_ipY6Qt8DuBg%3D%3D',
-    'X-GOOG-API-FORMAT-VERSION': '2',
     'Connection': 'keep-alive',
-    'X-Youtube-Cold-Hash-Data': 'CJqLysMGEhQxNzUyNTgwMjU1Nzc2MTQzNTM4Nxiai8rDBjIyQU9qRm94MndrcnJuX2ZaMjZvelZ6bENrVmlFcTIta2pyZVJOX2ViaVBKQXVhM3RkelE6MkFPakZveDBmcGM4Y1hNbmRDVHd1Ty1xVmFZNW12VG1LcHg2djZGd2s1SlZia3FtRWtBQpwCQ0FNUzBBRU5XNG5RcVFMR0VxOFIyWGoyQXU4Ry1CVHJBXzRyb3czeUVLb0JwQmZyQU5jcnFBNUczUXY5QTkyeW14RGtCbzBQM0Eta0N1RVB6QXZJQzdBTnZ3Q0VEOXNFdUFLckRfd0VGSjhCeFFHWUR1SUVUZDBTaFFaS2h3SVJsd1ptRlhlMnJOWU1oWVVGNWJrRnZLX1NDNXctdXhmTTZ3YWtMSWJIQlpTekJ1bHAwLU1HeGpIOGxRYUE2QVRkVnBvQjAxNmRFZjRWN0JPVVIteGVtWUVHOTFHdEpNeDlxVzZlSVpCN3Uyc0FxQ1NwTWM5UDRRMnVFYmdMc1M3NVJ2VmJMZTBnNVFHUTN3YlhBNmcyN0FicEM1WUw%3D',
+    'User-Agent': 'com.google.ios.youtube/20.10.4 (iPhone16,2; U; CPU iOS 18_3_2 like Mac OS X;)',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'Accept-Language': 'en-us,en;q=0.5',
+    'Sec-Fetch-Mode': 'navigate',
+    'X-Youtube-Client-Name': '5',
+    'X-Youtube-Client-Version': '20.10.4',
+    'Origin': 'https://www.youtube.com',
+    'X-Goog-Visitor-Id': 'CgtneWx0QzE2MmpKWSjpibnCBjIKCgJJThIEGgAgZw%3D%3D'
 }
 
 YT_PARAMS = {'prettyPrint': 'false'}
