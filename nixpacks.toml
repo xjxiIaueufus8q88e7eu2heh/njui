@@ -1,7 +1,5 @@
 providers = ["...", "python"]
 [phases.setup]
-    nixPkgs = ['...', 'ffmpeg']
-[phases.setup]
 nixPkgs = [
     "ffmpeg",
     "python311"
