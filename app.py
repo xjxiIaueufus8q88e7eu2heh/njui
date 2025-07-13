@@ -15,7 +15,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "supersecretkey")
 app.config['DOWNLOAD_FOLDER'] = 'downloads'
 app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100MB limit
-app.config['STREAM_CHUNK_SIZE'] = 8 * 1024 * 1024  # 1MB chunks for streaming
+app.config['STREAM_CHUNK_SIZE'] = 8 * 1024 * 1024  # 8MB chunks for streaming
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -85,6 +85,26 @@ YT_HEADERS = {
 }
 
 YT_PARAMS = {'prettyPrint': 'false'}
+
+def extract_video_id(url):
+    # Patterns to match different YouTube URL formats
+    patterns = [
+        r"youtube\.com/watch\?v=([^&]+)",         # Standard URL
+        r"youtu\.be/([^?]+)",                     # Short URL
+        r"youtube\.com/embed/([^/?]+)",           # Embed URL
+        r"youtube\.com/v/([^/?]+)",               # Legacy URL
+        r"youtube\.com/live/([^/?]+)",            # Live stream URL
+        r"youtube\.com/shorts/([^/?]+)",          # Shorts URL
+        r"m\.youtube\.com/watch\?v=([^&]+)"       # Mobile URL
+    ]
+    
+    for pattern in patterns:
+        match = re.search(pattern, url)
+        if match:
+            return match.group(1)
+    
+    # If no pattern matched, try to extract from the last part of the URL
+    return url.split("/")[-1].split("?")[0]
 
 def extract_streams(streams):
     """Find the best video and audio streams from YouTube adaptive formats"""
@@ -173,11 +193,7 @@ def download_thread(link, ss, to, output, request_id):
             }
         
         # Extract video ID
-        if "?" in link:
-            video_id = link.split("?")[0].split("/")[-1]
-        else:
-            video_id = link.split("/")[-1]
-        
+        video_id = extract_video_id(link)
         # Get streams from YouTube
         video_stream, audio_stream = get_youtube_streams(video_id)
         
@@ -276,7 +292,7 @@ def index():
     
     # Validate inputs
     errors = []
-    if not link.startswith(("https://www.youtube.com/", "https://youtu.be/")):
+    if not re.search(r"youtube\.com|youtu\.be", link):
         errors.append("Invalid YouTube URL")
     if not validate_time(ss):
         errors.append("Invalid start time format (use HH:MM:SS or MM:SS)")
@@ -420,11 +436,7 @@ def file_iterator(file_path, start=None, end=None, chunk_size=1024*1024):
                 remaining -= len(data)
                 
             yield data
-        
-@app.route("/status/<request_id>")
-def download_status_page(request_id):
-    return render_template("status.html", request_id=request_id)
-
+            
 @app.route("/progress/<request_id>")
 def download_progress(request_id):
     with download_lock:
