@@ -382,11 +382,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Set up download button
                         downloadBtn.onclick = () => {
                             window.location.href = `/download/${filename}`;
-                            
-                            // Cleanup after 1 hour
-                            setTimeout(() => {
-                                fetch(`/cleanup/${filename}`);
-                            }, 3600000);
                         };
                         
                         // Scroll to result
