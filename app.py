@@ -9,6 +9,7 @@ import json
 import requests
 from werkzeug.utils import secure_filename
 from mimetypes import guess_type
+import shutil
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "supersecretkey")
@@ -35,6 +36,21 @@ def time_to_seconds(time_str):
     for i in range(len(parts)):
         seconds += parts[i] * multipliers[i]
     return seconds
+
+def cleanup_old_files():
+    """Delete files older than 5 minutes from download folder"""
+    now = time.time()
+    folder = app.config['DOWNLOAD_FOLDER']
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        if os.path.isfile(file_path):
+            mtime = os.path.getmtime(file_path)
+            if now - mtime > 300:  # 5 minutes in seconds
+                try:
+                    os.remove(file_path)
+                    logging.info(f"Cleaned up old file: {filename}")
+                except Exception as e:
+                    logging.error(f"Error cleaning up file {filename}: {str(e)}")
 
 # Track download status
 download_status = {}
@@ -431,18 +447,16 @@ def download_file(filename):
     
     return send_file(file_path, as_attachment=True)
 
-@app.route("/cleanup/<filename>")
-def cleanup_file(filename):
-    safe_filename = secure_filename(filename)
-    file_path = os.path.join(app.config['DOWNLOAD_FOLDER'], safe_filename)
-    
-    try:
-        if os.path.exists(file_path):
-            os.remove(file_path)
-        return "File cleaned up", 200
-    except Exception as e:
-        return str(e), 500
+def cleanup_scheduler():
+    """Run cleanup every minute"""
+    while True:
+        cleanup_old_files()
+        time.sleep(60)  # Run every minute
 
 if __name__ == "__main__":
+    # Start cleanup thread
+    cleanup_thread = threading.Thread(target=cleanup_scheduler, daemon=True)
+    cleanup_thread.start()
+    
     port = int(os.environ.get("PORT", 9999))
     app.run(debug=True, host='0.0.0.0', port=port)
