@@ -14,9 +14,8 @@ import shutil
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "supersecretkey")
 app.config['DOWNLOAD_FOLDER'] = 'downloads'
-app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100MB limit
-app.config['STREAM_CHUNK_SIZE'] = 8 * 1024 * 1024  # 8MB chunks for streaming
-
+app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024
+app.config['STREAM_CHUNK_SIZE'] = 8 * 1024 * 1024
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
