@@ -1,8 +1,7 @@
 providers = ["...", "python"]
 [phases.setup]
 nixPkgs = [
-    "ffmpeg",
-    "python311"
+    "ffmpeg"
 ]
 
 [phases.install]
