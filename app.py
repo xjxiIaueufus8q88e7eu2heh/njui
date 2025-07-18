@@ -179,7 +179,7 @@ def get_youtube_streams(video_id):
         raise Exception(f"YouTube API request failed: {response.status_code}")
     
     data = response.json()
-    logging.error(json.dumps(json.loads(response.text),indent=4))
+    logging.error(json.dumps(json.loads(response.text)["responseContext"],indent=4))
     streaming_data = data.get("streamingData", {})
     adaptive_formats = streaming_data.get("adaptiveFormats", [])
     
