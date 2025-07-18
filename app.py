@@ -82,17 +82,16 @@ YT_COOKIES = {
 }
 
 YT_HEADERS = {
-    'Connection': 'keep-alive',
-    'Authorization': 'SAPISIDHASH 1752333351_82ae4ecddc203f6374c9a4de82d73dc22defce3f_u SAPISID1PHASH 1752333351_82ae4ecddc203f6374c9a4de82d73dc22defce3f_u SAPISID3PHASH 1752333351_82ae4ecddc203f6374c9a4de82d73dc22defce3f_u',
-    'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 18_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Mobile/15E148 Safari/604.1',
     'Accept': '*/*',
+    'X-Youtube-Client-Version': '20.28.2',
+    'Authorization': 'Bearer ya29.a0AS3H6NzStqQkWG5BULD3rbeSdnHx1-GOw1IVNxfraK9YjYNKoirHCgy5dWDMuVerGXHA2LWpGK0GkqFsJlszo6Ex9m9rVwAVCBINFP8qv5cFQKXYGqRkFe5fZuN8xQz3iJVrp294zcsb-hdmp_pNr5n5O67dkOMfuVN0a-timfw6eSs5XP-AOjLVa3jHiRrUDlQTXzChyaWQMBQg0s725PJ2DWo8ijHlJ999kF0n-6Qaefnq5x4V9zOmhIkmDmdNl4Emu0P02rrMdnsQy6xG4NEVOupLWVfmXqK0GQLY9DOpTbSRhEkOH9ntR5Men6CSU3a1pomksZJzCAfdaCgYKAYESARASFQHGX2MiI_5JHAJplQSJIQj04HoGTw0343',
+    'X-Youtube-Client-Name': '5',
     'Accept-Language': 'en-IN,en;q=0.9',
-    'Sec-Fetch-Mode': 'navigate',
-    'X-Youtube-Client-Name': '2',
-    'X-Youtube-Client-Version': '2.20250710.07.00',
-    'X-Youtube-Bootstrap-Logged-In': 'true',
-    'Origin': 'https://m.youtube.com',
-    'X-Goog-Visitor-Id': 'CgtUY3ZSVVJGWHdaWSiV-MnDBjIKCgJJThIEGgAgGA%3D%3D',
+    'Cache-Control': 'no-cache',
+    'User-Agent': 'com.google.ios.youtube/20.28.2 (iPad11,1; U; CPU iPadOS 18_5 like Mac OS X; en_IN)',
+    'X-GOOG-API-FORMAT-VERSION': '2',
+    'X-Goog-Visitor-Id': 'CgtBUkpBNThZdkVUOCiszenDBjIKCgJJThIEGgAgPToMCAEg_LOUnsTVmb1oWMKdxsH92fa5ygE%3D',
+    'Connection': 'keep-alive',
 }
 
 YT_PARAMS = {'prettyPrint': 'false'}
@@ -144,11 +143,11 @@ def get_youtube_streams(video_id):
     json_data = {
             'context': {
                 'client': {
-                    'clientName': 'MWEB',
-                    'clientVersion': '2.20250710.07.00',
+                    'clientName': 'IOS',
+                    'clientVersion': '20.28.2',
                     'deviceMake': 'Apple',
                     'deviceModel': 'iPad',
-                    'userAgent': 'Mozilla/5.0 (iPad; CPU OS 18_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Mobile/15E148 Safari/604.1,gzip(gfe)',
+                    'userAgent': 'com.google.ios.youtube/20.28.2 (iPad11,1; U; CPU iPadOS 18_5 like Mac OS X; en_IN)',
                     'osName': 'iPad',
                     'osVersion': '18_5',
                     'hl': 'en',
@@ -168,9 +167,9 @@ def get_youtube_streams(video_id):
     }
     
     response = requests.post(
-        'https://m.youtube.com/youtubei/v1/player',
+        'https://www.youtube.com/youtubei/v1/player',
         params=YT_PARAMS,
-        cookies=YT_COOKIES,
+       # cookies=YT_COOKIES,
         headers=YT_HEADERS,
         json=json_data,
     )
