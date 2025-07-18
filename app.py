@@ -57,30 +57,42 @@ download_lock = threading.Lock()
 
 # YouTube cookies and headers
 YT_COOKIES = {
-    "__Secure-3PSID": "g.a000xAi68EEwiHpVgKOgb_0IkaVhqnDZ5lzCwhQRp8c82UzZZch8f2AzQqaJKg-B05iZm6D-ygACgYKARESARASFQHGX2Mit6lAJidyakf-DSQQ3RLMZRoVAUF8yKr7g1ZnIDE3zqNE1r1J8ZOo0076",
-    "__Secure-1PSIDTS": "sidts-CjIB5H03P-AdzJTCxSMrqV3MrvhaLXDlh54-abS10xB-lGChJP5JVUEZ-kj7dhf4uOxWLhAA",
-    "SAPISID": "vV-FkowIK7ScWwJW/Azy3I1xFL4tE9pMHs",
-    "__Secure-1PSIDCC": "AKEyXzVyk5AFJUmI0NuS3ekkFwQcPZIbC09vPY3UXHvWEGPQ_HJy3_2os9M_bTxAI20uIleCTB15",
-    "SSID": "A5QQ8kH3RspqENXL5",
-    "__Secure-1PAPISID": "vV-FkowIK7ScWwJW/Azy3I1xFL4tE9pMHs",
-    "__Secure-1PSID": "g.a000xAi68EEwiHpVgKOgb_0IkaVhqnDZ5lzCwhQRp8c82UzZZch8TqRoD9Yv9BQP11E6lRuz6gACgYKASMSARASFQHGX2MibIOMeMIAHC47JIC3nWJAZRoVAUF8yKqHSBH9KXhliZmpeGlJWSR60076",
-    "__Secure-3PAPISID": "vV-FkowIK7ScWwJW/Azy3I1xFL4tE9pMHs",
-    "__Secure-3PSIDCC": "AKEyXzVSUZYWOFjQBwQTEpoRjaOdLyLsw6gZB0e4oDh_XsoQBI-8ZLZaBjqkb1Yc-kChYMVrIA",
-    "__Secure-3PSIDTS": "sidts-CjIB5H03P-AdzJTCxSMrqV3MrvhaLXDlh54-abS10xB-lGChJP5JVUEZ-kj7dhf4uOxWLhAA",
-    "LOGIN_INFO": "AFmmF2swRAIgSL9JJ01yt_mRAxDNK51IBdT_pHp1CXE-Jc4EZ4m6CuACIBSzAE0jJLqohH230mwp6EBAW802qnUUI2odCV0JT3yh:QUQ3MjNmeVJKVEFoVVdlbXVpRHFNTnJ1aW5DNDNqWUxwNXFSQXdRbEpRaURydVNYMW43MGxoWkdVZmozb3M2UnR6SUR3S0QtamJSZGFJQzJBOW5IMmNSb0htc3ZRdkZDdmdpZmJObTVjcFh0R2tqb1ZLUnEtRjRUcFdrUzAwSDc3Vjg3WERudnJlakViUTZ1Z29BeHIyWUtIOENBTFZJbXNR",
-    "PREF": "f6=40000400&f7=4100&tz=Asia.Calcutta&f5=20000&f4=4000000"
+    'ST-1jl44ru': 'csn=GSlEKOZq6K08Ueal&itct=CM0CEPxaIhMIhZqfsc63jgMVvvlMAh2IqxmJMgpnLWhpZ2gtcmVjWg9GRXdoYXRfdG9fd2F0Y2iaAQYQjh4YngE%3D',
+    'SIDCC': 'AKEyXzXyj_SzsukeBKYKt6KRQrRPNlBA9caUki-7UOr0fgMHmDGS6Ts0gEngxbIpBpmgU2eP',
+    '__Secure-1PSIDCC': 'AKEyXzVHK8GpGvy3h80vk8zdui0DNgONDcS3CgvTomQx3sHd0b2gvzD2PcJEmImh7Cwi91Gn2Q',
+    '__Secure-3PSIDCC': 'AKEyXzXIPLwYsOShHjMFug5j1Ge4VTO0V5iO55-X7ZSaLmBw4ATPK2Rc4YECQeqtJi5rW5Z27Q',
+    'LOGIN_INFO': 'AFmmF2swRQIhAKYGKe7Sz7aX6eOLqJIuQQhsWLxzGsWHukXH34cavXXAAiBUF2yEanpm3sAvSLWV8FmaQ2CTo6ooZM5rtzsU56RqbQ:QUQ3MjNmenlxclAwVHgyWUtONVloRnp5ZzRFWXZpZjlRTF9teEdsVVpVc1k0ZDgyMFM3elQ2cmdUUFB4bUJBSXJkbXRuT0o5WFpuUFF3aE9sRkhrUTJBQ0dDYVFCbThQczJsSlhPLWMwZDBfSmpmRllEN3VJcjJMd3RWcHRrTWh1d2FiV3JrVDc1Q18xQVlFRGdTSkhFOU1ZN2N0UWdwRmpB',
+    'PREF': 'f6=40000000&tz=Asia.Calcutta',
+    'VISITOR_INFO1_LIVE': 'TcvRURFXwZY',
+    'VISITOR_PRIVACY_METADATA': 'CgJJThIEGgAgGA%3D%3D',
+    'APISID': '85qI8fAsn7Q7PDxs/As53UNrIdO7bFBb7_',
+    'HSID': 'A97_ROvAFpYFtsVdh',
+    'SAPISID': 'ODeTM781gRL7UdID/A0F_qMb_UUlhxnLLG',
+    'SID': 'g.a000ygi68HtoGmv9lLjtAslbXj7bKXhKGVjiJJHuvHg4zbyuRZHUQ_gZiiKCTN4K6YodkIGcHAACgYKAWgSARASFQHGX2MioKs3RgKaqWrj6cXihhkcmhoVAUF8yKobO02jpijtoTnobwnbaAql0076',
+    'SSID': 'AZOBIRYi4YggP0ums',
+    '__Secure-1PAPISID': 'ODeTM781gRL7UdID/A0F_qMb_UUlhxnLLG',
+    '__Secure-1PSID': 'g.a000ygi68HtoGmv9lLjtAslbXj7bKXhKGVjiJJHuvHg4zbyuRZHUSmMl70EYHUbMQ1TH3_pqnQACgYKASUSARASFQHGX2MiEBRH99728DA_T8vMzP8AQBoVAUF8yKpMSd_bPkE54UQnkGcDJmFd0076',
+    '__Secure-1PSIDTS': 'sidts-CjIB5H03P4WGCa1oFBq6mL_67uwjsWfDwqJ-c7wY5SvKKdGMKUdxTmrg8o-Y7rRJNHUYJBAA',
+    '__Secure-3PAPISID': 'ODeTM781gRL7UdID/A0F_qMb_UUlhxnLLG',
+    '__Secure-3PSID': 'g.a000ygi68HtoGmv9lLjtAslbXj7bKXhKGVjiJJHuvHg4zbyuRZHU3qBVxpjNt2GYA4snYiifhwACgYKAQYSARASFQHGX2Mig48oKFGXpAoyKPkgocbPfBoVAUF8yKoXblmrpX5-ZQvvR3xMJO_e0076',
+    '__Secure-3PSIDTS': 'sidts-CjIB5H03P4WGCa1oFBq6mL_67uwjsWfDwqJ-c7wY5SvKKdGMKUdxTmrg8o-Y7rRJNHUYJBAA',
+    '__Secure-ROLLOUT_TOKEN': 'CPf809iXw5bMzQEQh_7Fms63jgMYsYjdqc63jgM%3D',
+    'GPS': '1',
+    'YSC': '8iWzeSTOyHg'
 }
 
 YT_HEADERS = {
     'Connection': 'keep-alive',
-    'User-Agent': 'com.google.ios.youtube/20.10.4 (iPhone16,2; U; CPU iOS 18_3_2 like Mac OS X;)',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    'Accept-Language': 'en-us,en;q=0.5',
+    'Authorization': 'SAPISIDHASH 1752333351_82ae4ecddc203f6374c9a4de82d73dc22defce3f_u SAPISID1PHASH 1752333351_82ae4ecddc203f6374c9a4de82d73dc22defce3f_u SAPISID3PHASH 1752333351_82ae4ecddc203f6374c9a4de82d73dc22defce3f_u',
+    'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 18_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Mobile/15E148 Safari/604.1',
+    'Accept': '*/*',
+    'Accept-Language': 'en-IN,en;q=0.9',
     'Sec-Fetch-Mode': 'navigate',
-    'X-Youtube-Client-Name': '5',
-    'X-Youtube-Client-Version': '20.10.4',
-    'Origin': 'https://www.youtube.com',
-    'X-Goog-Visitor-Id': 'CgtneWx0QzE2MmpKWSjpibnCBjIKCgJJThIEGgAgZw%3D%3D'
+    'X-Youtube-Client-Name': '2',
+    'X-Youtube-Client-Version': '2.20250710.07.00',
+    'X-Youtube-Bootstrap-Logged-In': 'true',
+    'Origin': 'https://m.youtube.com',
+    'X-Goog-Visitor-Id': 'CgtUY3ZSVVJGWHdaWSiV-MnDBjIKCgJJThIEGgAgGA%3D%3D',
 }
 
 YT_PARAMS = {'prettyPrint': 'false'}
@@ -130,33 +142,33 @@ def extract_streams(streams):
 def get_youtube_streams(video_id):
     """Get video and audio streams from YouTube API"""
     json_data = {
-        'context': {
-            'client': {
-                'clientName': 'IOS',
-                'clientVersion': '20.10.4',
-                'deviceMake': 'Apple',
-                'deviceModel': 'iPhone16,2',
-                'userAgent': 'com.google.ios.youtube/20.10.4 (iPhone16,2; U; CPU iOS 18_3_2 like Mac OS X;)',
-                'osName': 'iPhone',
-                'osVersion': '18.3.2.22D82',
-                'hl': 'en',
-                'timeZone': 'UTC',
-                'utcOffsetMinutes': 0,
+            'context': {
+                'client': {
+                    'clientName': 'MWEB',
+                    'clientVersion': '2.20250710.07.00',
+                    'deviceMake': 'Apple',
+                    'deviceModel': 'iPad',
+                    'userAgent': 'Mozilla/5.0 (iPad; CPU OS 18_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Mobile/15E148 Safari/604.1,gzip(gfe)',
+                    'osName': 'iPad',
+                    'osVersion': '18_5',
+                    'hl': 'en',
+                    'timeZone': 'Asia/Calcutta',
+                    'utcOffsetMinutes': 330,
+                },
             },
-        },
-        'videoId': video_id,
-        'playbackContext': {
-            'contentPlaybackContext': {
-                'html5Preference': 'HTML5_PREF_WANTS',
-                'signatureTimestamp': 20249,
+            'videoId': video_id,
+            'playbackContext': {
+                'contentPlaybackContext': {
+                    'html5Preference': 'HTML5_PREF_WANTS',
+                    'signatureTimestamp': 20249,
+                },
             },
-        },
-        'contentCheckOk': True,
-        'racyCheckOk': True,
+            'contentCheckOk': True,
+            'racyCheckOk': True,
     }
     
     response = requests.post(
-        'https://www.youtube.com/youtubei/v1/player',
+        'https://m.youtube.com/youtubei/v1/player',
         params=YT_PARAMS,
         cookies=YT_COOKIES,
         headers=YT_HEADERS,
@@ -167,6 +179,7 @@ def get_youtube_streams(video_id):
         raise Exception(f"YouTube API request failed: {response.status_code}")
     
     data = response.json()
+    logging.error(json.dumps(json.loads(response.text),indent=4))
     streaming_data = data.get("streamingData", {})
     adaptive_formats = streaming_data.get("adaptiveFormats", [])
     
